@@ -1,0 +1,89 @@
+/**
+ * Global mobile ergonomics.
+ *
+ * Element Plus ships desktop-first defaults: 14px body text, wide tables, and
+ * a fixed 40px control height. On a phone that means small text, sideways
+ * scrolling, and inputs that iOS zooms into on focus. These overrides are
+ * scoped to phones only so the desktop layout is untouched.
+ */
+
+/* iOS zooms any focused field whose computed font-size is under 16px. */
+input,
+textarea,
+select,
+.el-input__inner,
+.el-textarea__inner {
+  font-size: 16px;
+}
+
+/* Tap targets: 40px is desktop-sized and fiddly with a thumb. */
+.el-input__wrapper,
+.el-select__wrapper,
+.el-textarea__inner {
+  min-height: 44px;
+}
+
+/* Wide tables must scroll inside their own container, not the page. */
+.el-table {
+  max-width: 100%;
+}
+.el-table__inner-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Long unbroken strings (emails, order numbers) forced the page wider. */
+body {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (max-width: 767px) {
+  /* Dialogs: full height, scrollable body, sticky footer. */
+  .el-dialog {
+    width: 92vw !important;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    margin-top: 6vh !important;
+  }
+  .el-dialog__body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: 62vh;
+    padding: 16px 14px;
+  }
+  .el-dialog__footer {
+    position: sticky;
+    bottom: 0;
+    background: var(--el-bg-color-overlay, #fff);
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+  /* Drawers leave room for the home indicator. */
+  .el-drawer__body {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  /* Slightly larger base text for readability outdoors. */
+  .el-table {
+    font-size: 14px;
+  }
+  .el-message {
+    max-width: 86vw;
+  }
+}
+
+/* Desktop: keep controls at the comfortable default. */
+@media (min-width: 768px) {
+  input,
+  textarea,
+  select,
+  .el-input__inner,
+  .el-textarea__inner {
+    font-size: 14px;
+  }
+  .el-input__wrapper,
+  .el-select__wrapper {
+    min-height: 32px;
+  }
+}

@@ -1,0 +1,72 @@
+﻿# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# ---- secrets ----
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+.venv*/
+venv/
+env/
+htmlcov/
+.coverage
+coverage.xml
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# ---- Node / Vite ----
+node_modules/
+dist/
+.vite/
+*.tsbuildinfo
+
+# ---- runtime / logs / backups ----
+*.log
+_tmp_storage/
+tmp/
+backups/
+uploads/
+orderflow.db
+
+# ---- local scratch files (deployment helpers, screenshots, dumps) ----
+**/_*.py
+!**/__init__.py
+**/_*.png
+**/_*.gif
+**/_*.html
+**/_*.txt
+**/_*.db
+**/_*/
+*.bak
+*.bak-*
+server-build.log
+frontend-diff.txt
+server-diff.txt
+pip-install.log
+pytest-*.log
+
+# ---- generated / local only ----
+frontend/src/**/*.bak-motion

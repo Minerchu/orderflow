@@ -1,0 +1,40 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# ---- Local databases & secrets ----
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+.env
+.env.*
+!.env.example
+
+# ---- Local data ----
+data/
+uploads/
+
+# ---- Tests & tooling (not needed in the runtime image) ----
+tests/
+.coverage
+htmlcov/
+
+# ---- Editor / OS ----
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ---- VCS / docs ----
+.git/
+.gitignore
+README.md

@@ -1,0 +1,512 @@
+/* ==========================================================================
+   OrderFlow — 视觉基调
+   --------------------------------------------------------------------------
+   Element Plus ships a corporate-blue desktop theme. This file retunes its
+   CSS variables to a warm editorial palette so the app stops looking like a
+   stock admin template:
+
+     page      暖米白 #FAF8F4   卡片/弹窗 纯白
+     ink       墨色 #2C2C2A    次要文字 #5F5E5A
+     accent    绛红 #A32D2D    分隔线/填充 暖灰
+
+   Everything is a variable override, so no component markup had to change.
+   ========================================================================== */
+
+:root {
+  /* ---- Accent: 绛红 ---- */
+  --el-color-primary: #a32d2d;
+  --el-color-primary-light-3: #b85151;
+  --el-color-primary-light-5: #cd8080;
+  --el-color-primary-light-7: #e2b0b0;
+  --el-color-primary-light-8: #ecc7c7;
+  --el-color-primary-light-9: #f5e2e2;
+  --el-color-primary-dark-2: #8a2626;
+
+  /* ---- Surfaces ---- */
+  --el-bg-color: #faf8f4;            /* 页面底色：暖米白 */
+  --el-bg-color-page: #faf8f4;
+  --el-bg-color-overlay: #ffffff;    /* 弹窗 / 下拉：纯白 */
+  --el-fill-color-blank: #ffffff;
+  --el-fill-color-light: #f1efe8;    /* 输入框、分段控件底色 */
+  --el-fill-color-lighter: #f5f3ee;
+  --el-fill-color: #edeae1;
+
+  /* ---- Ink ---- */
+  --el-text-color-primary: #2c2c2a;
+  --el-text-color-regular: #444441;
+  --el-text-color-secondary: #5f5e5a;
+  --el-text-color-placeholder: #888780;
+
+  /* ---- Lines ---- */
+  --el-border-color: #d3d1c7;
+  --el-border-color-light: #e4e1d8;
+  --el-border-color-lighter: #edeae1;
+  --el-border-color-hover: #b4b2a9;
+
+  /* ---- Shape: 更圆的角，去掉后台模板感 ---- */
+  --el-border-radius-small: 6px;
+  --el-border-radius-base: 10px;
+  --el-border-radius-large: 14px;
+
+  /* ---- Type ---- */
+  --el-font-family: "Microsoft YaHei UI", "PingFang SC", "Hiragino Sans GB",
+    "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+/* 页面级：去掉浏览器默认外边距，避免深色页面四周露出白边 */
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* 页面级：去掉 Element Plus 默认的纯白底，让暖米白透出来 */
+body {
+  background-color: #faf8f4;
+}
+
+/* ---- 主色系组件的细节修正 ---- */
+
+/* 按钮：绛红实底，圆角，去掉默认的硬阴影 */
+.el-button--primary {
+  --el-button-bg-color: #a32d2d;
+  --el-button-border-color: #a32d2d;
+  --el-button-hover-bg-color: #b85151;
+  --el-button-hover-border-color: #b85151;
+  --el-button-active-bg-color: #8a2626;
+  --el-button-active-border-color: #8a2626;
+}
+
+/* 输入框聚焦时用绛红描边，而不是默认蓝 */
+.el-input__wrapper.is-focus,
+.el-textarea__inner:focus,
+.el-select__wrapper.is-focused {
+  box-shadow: 0 0 0 1px #a32d2d inset !important;
+}
+
+/* 文字按钮 / 链接也跟随主色 */
+.el-button--text,
+.el-link {
+  --el-button-text-color: #a32d2d;
+  --el-link-text-color: #a32d2d;
+}
+
+/* 表格：暖色表头，去掉默认的灰蓝 */
+.el-table th.el-table__cell {
+  background-color: #f5f3ee;
+  color: #2c2c2a;
+  font-weight: 500;
+}
+.el-table tr.el-table__row {
+  background-color: #ffffff;
+}
+.el-table--enable-row-hover .el-table__body tr:hover > td.el-table__cell {
+  background-color: #faf6f2;
+}
+
+/* 菜单：选中项用绛红文字 + 暖底，而不是默认的蓝底白字 */
+.el-menu-item.is-active {
+  color: #a32d2d;
+  background-color: #f5e2e2;
+}
+.el-menu-item:hover {
+  background-color: #f1efe8;
+}
+
+/* 标签：给状态 tag 一点暖色边框，别用系统默认的亮色块 */
+.el-tag {
+  --el-tag-border-radius: 6px;
+  border-width: 0.5px;
+}
+
+/* 开关 / 单选框 / 复选框的选中色 */
+.el-switch.is-checked .el-switch__core {
+  background-color: #a32d2d;
+  border-color: #a32d2d;
+}
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-radio__input.is-checked .el-radio__inner {
+  background-color: #a32d2d;
+  border-color: #a32d2d;
+}
+
+/* 进度条 / 加载态 */
+.el-progress-bar__inner {
+  background-color: #a32d2d;
+}
+
+/* 弹窗：暖白底 + 更柔和的圆角 */
+.el-dialog {
+  --el-dialog-border-radius: 16px;
+}
+.el-overlay-dialog,
+.el-dialog__body {
+  background-color: #ffffff;
+}
+
+/* 抽屉 */
+.el-drawer {
+  background-color: #ffffff;
+}
+
+/* ==========================================================================
+   布局：侧边栏与主区域
+   ========================================================================== */
+
+/* 侧边栏用纯白，和暖米白的页面形成层次 */
+.el-aside,
+.of-aside {
+  background-color: #ffffff;
+  border-right: 0.5px solid #e4e1d8;
+}
+
+.of-logo {
+  padding: 22px 20px 18px;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #2c2c2a;
+}
+.of-logo::after {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-top: 10px;
+  background-color: #a32d2d;
+}
+
+/* 主内容区留白 */
+.of-main {
+  background-color: #faf8f4;
+}
+.of-main__inner {
+  padding: 24px;
+  max-width: 1180px;
+}
+@media (max-width: 767px) {
+  .of-main__inner {
+    padding: 16px 14px calc(84px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* 页头 */
+.of-page-head {
+  margin-bottom: 18px;
+}
+.of-page-head__title {
+  font-size: 22px;
+  font-weight: 500;
+  color: #2c2c2a;
+  letter-spacing: -0.01em;
+}
+.of-page-head__desc {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #5f5e5a;
+}
+@media (max-width: 767px) {
+  .of-page-head__title { font-size: 19px; }
+}
+
+/* ==========================================================================
+   快速发单入口（原 send-hero，蓝紫渐变 → 扁平暖色卡）
+   ========================================================================== */
+
+.of-send-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 24px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 0.5px solid #e4e1d8;
+  border-radius: 14px;
+}
+.of-send-hero__title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #2c2c2a;
+}
+.of-send-hero__desc {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #5f5e5a;
+}
+.of-send-hero__button {
+  min-height: 46px;
+  padding: 0 22px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 11px;
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .of-send-hero {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 18px;
+    gap: 14px;
+  }
+  .of-send-hero__button { width: 100%; }
+}
+
+/* 手机浮动发单按钮 */
+.of-fab {
+  display: none;
+}
+@media (max-width: 640px) {
+  .of-fab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: fixed;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    right: 16px;
+    left: 16px;
+    z-index: 1000;
+    min-height: 54px;
+    border: none;
+    border-radius: 14px;
+    background-color: #a32d2d;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .of-fab:active { background-color: #8a2626; }
+}
+
+/* ==========================================================================
+   发单弹窗
+   ========================================================================== */
+
+.of-create-hint { margin-bottom: 14px; }
+
+/* 字段卡：一个字段一张白卡，视觉上是一屏一件事 */
+.of-field {
+  background-color: #ffffff;
+  border: 0.5px solid #e4e1d8;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.of-field__label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #2c2c2a;
+}
+.of-field__hint {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #888780;
+}
+
+/* 商品 chip 网格 */
+.of-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.of-chip {
+  padding: 9px 14px;
+  border: 0.5px solid #d3d1c7;
+  border-radius: 10px;
+  background-color: #f5f3ee;
+  font-size: 13px;
+  color: #444441;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+  user-select: none;
+}
+.of-chip:active { transform: scale(0.97); }
+.of-chip--on {
+  background-color: #a32d2d;
+  border-color: #a32d2d;
+  color: #ffffff;
+}
+.of-chip--more {
+  border-style: dashed;
+  color: #5f5e5a;
+}
+
+/* 金额大数字 */
+.of-amount {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 0 14px;
+}
+.of-amount__sign {
+  font-size: 18px;
+  color: #888780;
+}
+.of-amount__input {
+  width: 100%;
+  max-width: 220px;
+}
+.of-amount__input :deep(.el-input__inner) {
+  height: 52px;
+  font-size: 30px;
+  font-weight: 500;
+  text-align: center;
+  color: #2c2c2a;
+  letter-spacing: -0.01em;
+}
+
+/* 分段控件 */
+.of-seg {
+  display: flex;
+  gap: 8px;
+}
+.of-seg__item {
+  flex: 1;
+  padding: 11px 0;
+  text-align: center;
+  border: 0.5px solid #d3d1c7;
+  border-radius: 10px;
+  background-color: #f5f3ee;
+  font-size: 13px;
+  color: #444441;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+.of-seg__item:active { transform: scale(0.98); }
+.of-seg__item--on {
+  background-color: #2c2c2a;
+  border-color: #2c2c2a;
+  color: #ffffff;
+}
+
+/* 账号信息粘贴条 */
+.of-pastebar {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.of-pastebar .el-button {
+  flex: 1;
+  min-height: 42px;
+}
+
+/* 图片格子 */
+.of-img-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.of-img-paste {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+.of-img-paste .of-field__hint {
+  flex: 1;
+  min-width: 180px;
+}
+.of-img-cell {
+  position: relative;
+  aspect-ratio: 1;
+  border: 0.5px dashed #d3d1c7;
+  border-radius: 10px;
+  background-color: #f5f3ee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.of-img-cell--add {
+  color: #888780;
+  font-size: 24px;
+  cursor: pointer;
+}
+.of-img-cell--add:active { background-color: #edeae1; }
+.of-img-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.of-img-cell__del {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: rgba(44, 44, 42, 0.72);
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* 底部操作条：手机上贴住弹窗底部，三个按钮一排 */
+.of-create-footer {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.of-create-footer .el-button {
+  min-height: 46px;
+  border-radius: 11px;
+  font-size: 14px;
+  font-weight: 500;
+}
+@media (max-width: 640px) {
+  .of-create-footer { width: 100%; }
+  .of-create-footer .el-button { flex: 1; padding: 0 8px; }
+}
+
+/* 订单详情抽屉顶栏 */
+.of-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+.of-detail-actions .el-button { min-height: 40px; }
+
+/* 「再来一单」：详情里的快捷复用入口 */
+.of-reuse {
+  margin-top: 14px;
+  padding: 14px;
+  background-color: #faf6f2;
+  border: 0.5px solid #ecc7c7;
+  border-radius: 12px;
+}
+.of-reuse__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2c2c2a;
+  margin-bottom: 4px;
+}
+.of-reuse__desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #5f5e5a;
+  margin-bottom: 10px;
+}
+.of-reuse .el-button {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 10px;
+}

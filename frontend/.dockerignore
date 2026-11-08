@@ -1,0 +1,20 @@
+node_modules/
+dist/
+.vite/
+
+# ---- Local env (VITE_* are baked at build time) ----
+.env
+.env.*
+!.env.example
+
+# ---- Editor / OS ----
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ---- VCS / docs ----
+.git/
+.gitignore
+README.md
