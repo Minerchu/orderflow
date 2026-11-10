@@ -176,6 +176,71 @@ def test_dispatcher_settlement_is_independent_from_group_settlement(client, admi
     assert group_batch.json()["order_count"] == 1
     assert group_batch.json()["settlement_type"] == "group"
 
+def test_dispatcher_settlement_does_not_restart_group_sequence(client, admin, db):
+    """A dispatcher batch is a private ledger and never starts a group cycle.
+
+    Regression: orders created after a dispatcher settlement were stamped with
+    that dispatcher batch id. The group sequence is scoped by cycle id, so the
+    whole group's "No. N" count restarted at 1.
+    """
+    from app.services.orders import current_cycle_id
+    from app.services.telegram_bot import sequence_for
+
+    p1 = _product(client, admin, "P1")
+    d = _dispatcher(client, admin, product_ids=[p1["id"]])
+    token = _login(client, "disp1", "dpass")
+
+    # Establish a group cycle with one completed admin order.
+    a1 = client.post("/api/orders", json={"amount": "25"},
+                     headers=_auth(admin)).json()
+    done = client.patch(f"/api/orders/{a1['id']}", json={"order_status": "completed"},
+                        headers=_auth(admin))
+    assert done.status_code == 200, done.text
+
+    group_batch = client.post("/api/settlements", json={}, headers=_auth(admin))
+    assert group_batch.status_code == 201, group_batch.text
+    group_id = group_batch.json()["id"]
+    confirmed = client.post(
+        f"/api/settlements/{group_batch.json()['settlement_id']}/confirm",
+        headers=_auth(admin),
+    )
+    assert confirmed.status_code == 200, confirmed.text
+    db.expire_all()
+    assert current_cycle_id(db) == group_id
+
+    # A dispatcher order is created inside that same group cycle.
+    d1 = client.post("/api/orders",
+                     json={"product_id": p1["id"], "amount": "25"},
+                     headers=_auth(token)).json()
+    done = client.patch(f"/api/orders/{d1['id']}", json={"order_status": "completed"},
+                        headers=_auth(admin))
+    assert done.status_code == 200, done.text
+
+    disp_batch = client.post("/api/settlements",
+                             json={"dispatcher_user_id": d["id"]},
+                             headers=_auth(admin))
+    assert disp_batch.status_code == 201, disp_batch.text
+    assert disp_batch.json()["settlement_type"] == "dispatcher"
+    confirmed = client.post(
+        f"/api/settlements/{disp_batch.json()['settlement_id']}/confirm",
+        headers=_auth(admin),
+    )
+    assert confirmed.status_code == 200, confirmed.text
+
+    db.expire_all()
+    # The private batch must not become the group's current cycle.
+    assert current_cycle_id(db) == group_id
+
+    # The next order joins the existing group cycle and continues the count.
+    a2 = client.post("/api/orders", json={"amount": "25"},
+                     headers=_auth(admin)).json()
+    db.expire_all()
+    new_order = db.get(Order, a2["id"])
+    new_order.order_status = "pending"
+    db.commit()
+    assert new_order.cycle_id == group_id
+    assert sequence_for(db, new_order) == 2
+
 
 def test_telegram_bind_token_flow(client, admin, db):
     _dispatcher(client, admin)

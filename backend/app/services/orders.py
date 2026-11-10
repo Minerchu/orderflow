@@ -51,12 +51,19 @@ def current_cycle_id(db: Session):
     ``None`` means "the original cycle" -- orders created before the first
     settlement keeps its original numbering.
     """
-    from app.constants import SETTLEMENT_CONFIRMED
+    from app.constants import SETTLEMENT_CONFIRMED, SETTLEMENT_TYPE_GROUP
     from app.db.models.settlement import SettlementBatch
 
     return db.execute(
         select(SettlementBatch.id)
-        .where(SettlementBatch.status == SETTLEMENT_CONFIRMED)
+        .where(
+            SettlementBatch.status == SETTLEMENT_CONFIRMED,
+            # Only group settlements close a group numbering cycle. A
+            # dispatcher settlement is a private ledger and must never make
+            # the next order start a new group cycle (that reset the visible
+            # "No. N" count for the whole group).
+            SettlementBatch.settlement_type == SETTLEMENT_TYPE_GROUP,
+        )
         .order_by(SettlementBatch.id.desc())
         .limit(1)
     ).scalar()

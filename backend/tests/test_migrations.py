@@ -23,7 +23,7 @@ from alembic.script import ScriptDirectory
 BACKEND_DIR = Path(__file__).resolve().parents[1]
 
 EXPECTED_PRODUCTS_COLUMNS = {"id", "name", "is_active", "created_at", "updated_at"}
-EXPECTED_HEAD = "c8d4f2a91b70"
+EXPECTED_HEAD = "a91c7e4f2b3d"
 
 
 def _isolated_tmpdir() -> Path:
@@ -70,6 +70,7 @@ def test_migration_chain_is_linear_and_has_one_head():
         "b6d1f7a30e58",
         "d1a7c4e92f60",
         "c8d4f2a91b70",
+        "a91c7e4f2b3d",
     ], f"unexpected migration chain: {revisions}"
     assert script.get_current_head() == EXPECTED_HEAD
 
